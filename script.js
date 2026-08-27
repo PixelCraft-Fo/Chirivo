@@ -207,4 +207,44 @@
     });
   });
 
+
+  /* ============================================================
+     5. CONSIMȚĂMÂNT (GDPR) — casetă mică, o singură dată
+     Apare după preloader, dacă utilizatorul n-a acceptat deja.
+     Nu blochează pagina — doar informează.
+     ============================================================ */
+  var CHEIE_CONSIMTAMANT = 'chirivo-consent';
+  var consimtamant        = $('#consent');
+  var btnConsimtamant     = $('#consent-accept');
+
+  function citesteConsimtamant() {
+    try { return localStorage.getItem(CHEIE_CONSIMTAMANT); } catch (e) { return null; }
+  }
+  function salveazaConsimtamant() {
+    try { localStorage.setItem(CHEIE_CONSIMTAMANT, 'acceptat'); } catch (e) { /* mod privat / storage blocat */ }
+  }
+
+  if (consimtamant && !citesteConsimtamant()) {
+    var arataConsimtamant = function () {
+      consimtamant.hidden = false;
+      /* forțăm un reflow, ca tranziția CSS să pornească din starea inițială */
+      void consimtamant.offsetWidth;
+      consimtamant.classList.add('is-visible');
+    };
+
+    if (reduceMotion) {
+      arataConsimtamant();
+    } else {
+      window.setTimeout(arataConsimtamant, DURATA_PRELOADER + 300);
+    }
+
+    if (btnConsimtamant) {
+      btnConsimtamant.addEventListener('click', function () {
+        consimtamant.classList.remove('is-visible');
+        salveazaConsimtamant();
+        window.setTimeout(function () { consimtamant.hidden = true; }, 350);
+      });
+    }
+  }
+
 })();

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ro" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Confidențialitate — Chirivo</title>
+  <meta name="description" content="Ce date colectează Chirivo prin formularul de waitlist, de ce, și cum le poți cere ștergerea.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3B6FCC">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    (function () {
+      var salvat = null;
+      try { salvat = localStorage.getItem('chirivo-theme'); } catch (e) {}
+      var sistemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var tema = salvat || (sistemDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', tema);
+    })();
+  </script>
+
+  <style>
+    /* stiluri mici, doar pentru pagina asta — nu ating style.css */
+    .legal { padding-block: clamp(48px, 8vw, 96px); }
+    .legal h2 { font-size: 1.5rem; margin-top: 2.4em; margin-bottom: 0.6em; }
+    .legal h2:first-of-type { margin-top: 0; }
+    .legal p, .legal li { color: var(--ink-muted); }
+    .legal ul { margin: 0.8em 0 0; padding-left: 1.3em; }
+    .legal li { margin-bottom: 0.5em; }
+    .legal .updated { font-size: 0.9rem; color: var(--ink-muted); margin-top: 3em; }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip-link" href="#continut">Sari la conținut</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="logo" href="index.html" aria-label="Chirivo — acasă">
+        <svg class="logo__mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 12L12 4L20 12V20H4V12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M9 14.5L11.5 17L16 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo__word">Chirivo</span>
+      </a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Comută tema">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.2M12 19.2v2.2M4.5 4.5l1.6 1.6M17.9 17.9l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.5 19.5l1.6-1.6M17.9 6.1l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="continut">
+    <section class="legal">
+      <div class="wrap wrap--narrow">
+
+        <p class="eyebrow">Confidențialitate</p>
+        <h1 class="section__title">Ce facem cu datele tale</h1>
+        <p class="lead">
+          Chirivo e, deocamdată, doar o pagină de prezentare cu o listă de așteptare.
+          Colectăm foarte puțin — dar merită să știi exact ce și de ce.
+        </p>
+
+        <h2>Ce date colectăm</h2>
+        <p>
+          Singurul lucru pe care ți-l cerem este adresa de email, atunci când te
+          înscrii pe lista de așteptare. Nu cerem nume, telefon, adresă sau alte
+          date personale pe această pagină.
+        </p>
+
+        <h2>De ce o colectăm</h2>
+        <p>
+          Exclusiv ca să te anunțăm, printr-un singur email, când aplicația Chirivo
+          e gata de testare. Nu trimitem alte emailuri, nu vindem și nu închiriem
+          adresa ta către terți, și nu o folosim în scop de marketing.
+        </p>
+
+        <h2>Cine procesează adresa ta</h2>
+        <p>
+          Formularul e trimis prin <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener">Formspree</a>,
+          un serviciu terț de gestionare a formularelor. Adresa ta trece prin
+          infrastructura lor ca să ajungă la noi — ei acționează ca procesator de
+          date, conform propriei politici de confidențialitate (link mai sus).
+        </p>
+
+        <h2>Cât timp o păstrăm</h2>
+        <p>
+          Până la lansarea aplicației și trimiterea anunțului, sau până ceri
+          ștergerea ei — ce vine primul.
+        </p>
+
+        <h2>Drepturile tale</h2>
+        <p>Poți oricând să ne scrii la <a href="mailto:ChirivoRo@gmail.com">ChirivoRo@gmail.com</a> ca să:</p>
+        <ul>
+          <li>afli dacă adresa ta e încă în lista noastră;</li>
+          <li>ceri ștergerea ei, oricând, fără explicații;</li>
+          <li>ceri o copie a datelor pe care le avem despre tine (practic, doar emailul).</li>
+        </ul>
+        <p>Răspundem la orice cerere de acest fel în cel mult 30 de zile.</p>
+
+        <h2>Cookie-uri și stocare locală</h2>
+        <p>
+          Site-ul reține în browser-ul tău (local, tehnologie numită
+          <code>localStorage</code>) o singură preferință: tema aleasă (deschisă
+          sau închisă). Nu e o informație care te identifică și nu părăsește
+          browser-ul tău — nu e trimisă către noi sau către altcineva. Nu folosim
+          cookie-uri de urmărire (tracking) sau publicitate.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Pentru orice întrebare legată de confidențialitate, scrie-ne la
+          <a href="mailto:ChirivoRo@gmail.com">ChirivoRo@gmail.com</a>.
+        </p>
+
+        <p class="updated">Ultima actualizare: august 2026.</p>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <p class="site-footer__contact">
+        <a href="index.html">← Înapoi la Chirivo</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

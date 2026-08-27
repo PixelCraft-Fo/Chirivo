@@ -388,6 +388,20 @@
     </div>
   </footer>
 
+  <!-- ============================================================
+       CONSIMȚĂMÂNT — casetă mică, colț dreapta-jos, o singură dată.
+       Apare după preloader dacă utilizatorul n-a acceptat deja
+       (salvat local, în același browser). Nu blochează pagina —
+       rămâne vizibil restul conținutului dedesubt.
+       ============================================================ -->
+  <div class="consent" id="consent" hidden>
+    <p class="consent__text">
+      <span class="consent__text--long">Folosim doar strictul necesar pentru acest site — vezi</span>
+      <a href="privacy.html">Confidențialitate</a>.
+    </p>
+    <button class="btn btn--primary consent__accept" id="consent-accept" type="button">Accept</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
