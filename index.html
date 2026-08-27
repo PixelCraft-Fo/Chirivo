@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ro" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ============================================================
+       SEO + METADATE
+       ============================================================ -->
+  <title>Chirivo — chirie, facturi și garanție fără neînțelegeri</title>
+  <meta name="description" content="O aplicație simplă unde proprietarul și chiriașul văd, amândoi, aceleași plăți, aceleași facturi și aceeași dovadă la garanție.">
+  <meta name="theme-color" content="#3B6FCC">
+
+  <!-- Open Graph (share pe social media) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Chirivo — chirie, facturi și garanție fără neînțelegeri">
+  <meta property="og:description" content="O aplicație simplă unde proprietarul și chiriașul văd, amândoi, aceleași plăți, aceleași facturi și aceeași dovadă la garanție.">
+  <meta property="og:locale" content="ro_RO">
+  <!-- TODO: adaugă og:url și og:image după ce publici site-ul
+  <meta property="og:url" content="https://chirivo.ro/">
+  <meta property="og:image" content="https://chirivo.ro/images/og.png">
+  -->
+
+  <!-- Favicon (iconița brandului, fișier separat: favicon.svg) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- ============================================================
+       FONTURI — Space Grotesk (titluri) + IBM Plex Sans (text)
+       ============================================================ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- ============================================================
+       TEMA — se aplică ÎNAINTE de primul paint, ca să nu clipească
+       pagina albă când utilizatorul are tema dark salvată.
+       (singurul script inline din pagină; restul e în script.js)
+       ============================================================ -->
+  <script>
+    (function () {
+      var salvat = null;
+      try { salvat = localStorage.getItem('chirivo-theme'); } catch (e) {}
+      var sistemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var tema = salvat || (sistemDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', tema);
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       PRELOADER — ecran plin, ÎNTOTDEAUNA pe fundal închis,
+       indiferent de tema aleasă. Iconița se desenează, apoi fade-out.
+       Se ascunde din script.js (sau instant, dacă utilizatorul are
+       prefers-reduced-motion: reduce).
+       ============================================================ -->
+  <div class="preloader" id="preloader" role="status" aria-label="Se încarcă Chirivo">
+    <svg class="preloader__mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path class="house" d="M4 12L12 4L20 12V20H4V12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+      <path class="check" d="M9 14.5L11.5 17L16 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- Sări la conținut — util pentru navigare cu tastatura -->
+  <a class="skip-link" href="#continut">Sari la conținut</a>
+
+  <!-- ============================================================
+       1. HEADER — logo stânga, switch temă dreapta
+       ============================================================ -->
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+
+      <a class="logo" href="#" aria-label="Chirivo — acasă">
+        <svg class="logo__mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 12L12 4L20 12V20H4V12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M9 14.5L11.5 17L16 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo__word">Chirivo</span>
+      </a>
+
+      <!-- Switch temă: aria-label-ul e actualizat din JS -->
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Comută tema">
+        <!-- soare (vizibil în tema dark: „treci pe light") -->
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.2M12 19.2v2.2M4.5 4.5l1.6 1.6M17.9 17.9l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.5 19.5l1.6-1.6M17.9 6.1l1.6-1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <!-- lună (vizibilă în tema light: „treci pe dark") -->
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+    </div>
+  </header>
+
+  <main id="continut">
+
+    <!-- ============================================================
+         2. HERO
+         ============================================================ -->
+    <section class="hero">
+      <div class="wrap hero__grid">
+
+        <div class="hero__col">
+          <p class="eyebrow">Pentru proprietari și chiriași din România</p>
+          <h1 class="hero__title">Chirie, facturi și garanție — fără neînțelegeri</h1>
+          <p class="hero__sub lead">
+            O aplicație simplă unde proprietarul și chiriașul văd, amândoi, aceleași plăți,
+            aceleași facturi și aceeași dovadă la garanție. Fără WhatsApp pierdut prin
+            conversații, fără „ți-am zis, ba nu mi-ai zis”.
+          </p>
+
+          <!-- Formular waitlist #1 (Hero).
+               ÎNLOCUIEȘTE YOUR_FORM_ID cu ID-ul tău real de pe formspree.io -->
+          <div class="signup" data-signup>
+            <form class="signup__form" action="https://formspree.io/f/mgaewygp" method="POST" novalidate>
+              <label class="visually-hidden" for="email-hero">Adresa ta de email</label>
+              <input class="signup__input" type="email" id="email-hero" name="email" placeholder="adresa@email.com" autocomplete="email" required>
+              <button class="btn btn--primary" type="submit">Anunță-mă la lansare</button>
+            </form>
+            <p class="signup__note">Lansăm în 2027. Zero spam, un singur email când e gata.</p>
+            <!-- Mesajele de stare (succes/eroare) sunt afișate din script.js -->
+            <p class="signup__msg" role="status" aria-live="polite" hidden></p>
+          </div>
+        </div>
+
+        <div class="hero__col hero__media">
+          <!-- Cadrul are un background din paletă: dacă poza lipsește,
+               secțiunea rămâne curată vizual (vezi .media-frame în style.css) -->
+          <figure class="media-frame media-frame--hero">
+            <img src="images/poza1.png" alt="Proprietar și chiriaș verificând împreună, pe telefon, situația plăților și a facturilor apartamentului" loading="eager" width="1200" height="1400">
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. PROBLEMA
+         ============================================================ -->
+    <section class="section problema">
+      <div class="wrap">
+
+        <div class="problema__head">
+          <div class="problema__head-text">
+            <p class="eyebrow">Problema</p>
+            <h2 class="section__title">Recunoști vreuna din situațiile astea?</h2>
+          </div>
+          <figure class="media-frame media-frame--problema">
+            <img src="images/poza2.png" alt="Chitanțe, facturi de utilități și mesaje pe telefon amestecate pe masă — evidența unei chirii ținută dezordonat" loading="lazy" width="900" height="700">
+          </figure>
+        </div>
+
+        <!-- 3 carduri: stivuite pe mobil, alăturate pe desktop -->
+        <div class="cards">
+
+          <article class="card">
+            <h3 class="card__title">Plata pierdută</h3>
+            <p class="card__text">Chiriașul zice că a plătit. Proprietarul nu găsește dovada. Amândoi au dreptate, din punctul lor de vedere.</p>
+          </article>
+
+          <article class="card">
+            <h3 class="card__title">Garanția contestată</h3>
+            <p class="card__text">La final, apar pagube. Cine le-a făcut? De când sunt acolo? Fără poze de la început, discuția devine cuvântul unuia contra celuilalt.</p>
+          </article>
+
+          <article class="card">
+            <h3 class="card__title">Factura amânată</h3>
+            <p class="card__text">Proprietarul plătește furnizorul, dar uită să ceară banii înapoi. Sau chiriașul uită să-i dea. Trece o lună, apoi două.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. CUM FUNCȚIONEAZĂ — 4 pași numerotați + schema de status
+         ============================================================ -->
+    <section class="section cum">
+      <div class="wrap">
+        <p class="eyebrow">Cum funcționează</p>
+        <h2 class="section__title section__title--center">Un singur loc, ambele părți</h2>
+
+        <ol class="steps">
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">1</span>
+            <!-- iconiță: două persoane legate (cont dual) -->
+            <svg class="step__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/>
+              <circle cx="16" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M3 19c0-2.5 2.2-4.2 5-4.2M21 19c0-2.5-2.2-4.2-5-4.2M11 8h2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <h3 class="step__title">Cont dual</h3>
+            <p class="step__text">Proprietarul și chiriașul intră în aceeași aplicație, fiecare cu rolul lui. Legătura se face printr-un link de invitație simplu.</p>
+          </li>
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">2</span>
+            <!-- iconiță: bancnotă / plată confirmată -->
+            <svg class="step__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M7.5 14.5l2 2 4.5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.5 9.5v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <h3 class="step__title">Plăți urmărite</h3>
+            <p class="step__text">Transfer bancar (chiriașul încarcă dovada, proprietarul confirmă) sau cash (proprietarul marchează direct). Fără ambiguitate despre cine a plătit ce.</p>
+          </li>
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">3</span>
+            <!-- iconiță: document cu două etape -->
+            <svg class="step__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 3.5h7L18.5 9v11.5h-12.5V3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M13 3.5V9h5.5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M9 13h6M9 16.5h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <h3 class="step__title">Facturi în doi pași</h3>
+            <p class="step__text">Proprietarul încarcă factura + suma datorată. Chiriașul plătește, proprietarul confirmă. Istoric clar, pentru amândoi.</p>
+          </li>
+
+          <li class="step">
+            <span class="step__num" aria-hidden="true">4</span>
+            <!-- iconiță: aparat foto -->
+            <svg class="step__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3.5 8.5h3l1.5-2.5h8l1.5 2.5h3v10h-17v-10Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+            <h3 class="step__title">Poze de la început, poze la verificări</h3>
+            <p class="step__text">Starea apartamentului documentată de la intrare, actualizată periodic. La final, garanția se calculează clar: ce s-a reținut și de ce.</p>
+          </li>
+
+        </ol>
+
+        <!-- Schema de status: mini-flow desenat în SVG/CSS, nu imagine.
+             Cele 3 stări din Chirivo: plătit / în așteptare / restant. -->
+        <div class="flow">
+
+          <ol class="flow__track" aria-label="Traseul unei plăți în Chirivo: dovadă încărcată, verificare, plătit">
+            <li class="flow__node">
+              <svg class="flow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 16V5.5M12 5.5 8.5 9M12 5.5 15.5 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4.5 15.5v3h15v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>dovadă încărcată</span>
+            </li>
+
+            <li class="flow__arrow" aria-hidden="true">
+              <svg viewBox="0 0 40 12" fill="none">
+                <path d="M1 6h34M31 2l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </li>
+
+            <li class="flow__node">
+              <svg class="flow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>verificare</span>
+            </li>
+
+            <li class="flow__arrow" aria-hidden="true">
+              <svg viewBox="0 0 40 12" fill="none">
+                <path d="M1 6h34M31 2l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </li>
+
+            <li class="flow__node">
+              <svg class="flow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/>
+                <path d="M8.5 12.2l2.4 2.4 4.6-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>plătit</span>
+            </li>
+          </ol>
+
+          <!-- Legenda celor 3 culori de status -->
+          <ul class="legend">
+            <li class="legend__item"><span class="dot dot--paid" aria-hidden="true"></span>plătit</li>
+            <li class="legend__item"><span class="dot dot--pending" aria-hidden="true"></span>în așteptare confirmare</li>
+            <li class="legend__item"><span class="dot dot--late" aria-hidden="true"></span>restant</li>
+          </ul>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. DIFERENȚIATORUL
+         ============================================================ -->
+    <section class="section diferentiator">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow">Diferența</p>
+        <h2 class="section__title">Ce ne desparte de un simplu tracker de plăți</h2>
+        <p class="statement">
+          Există aplicații care bifează „plătit” sau „neplătit”. Chirivo merge mai departe:
+          leagă garanția de poze reale, documentate la momentul potrivit — la intrare și la
+          fiecare verificare periodică, cu preaviz, exact cum prevede legea. Când vine ziua
+          predării, nu mai e o discuție în ceață. E o listă clară, cu poze și date, la care
+          se uită amândoi.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. PENTRU CINE
+         ============================================================ -->
+    <section class="section pentru-cine">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow">Pentru cine</p>
+        <h2 class="section__title">Gândită pentru proprietari și chiriașii lor — de la un apartament în sus</h2>
+        <p class="lead">
+          Nu construim pentru fonduri imobiliare sau portofolii uriașe. Construim pentru
+          situația reală, de zi cu zi: proprietari care vor o relație clară cu chiriașii lor,
+          fără birocrație inutilă — fie că au un singur apartament sau câteva.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. WAITLIST FINAL
+         ============================================================ -->
+    <section class="section waitlist">
+      <div class="wrap wrap--narrow waitlist__inner">
+        <h2 class="section__title section__title--center">Fii primul care încearcă Chirivo</h2>
+        <p class="lead waitlist__text">
+          Aplicația e în construcție acum. Lasă-ți emailul și te anunțăm exact când e gata
+          de testat — nu mai devreme, nu cu promisiuni goale.
+        </p>
+
+        <!-- Formular waitlist #2 (final).
+             ÎNLOCUIEȘTE YOUR_FORM_ID cu ID-ul tău real de pe formspree.io -->
+        <div class="signup signup--center" data-signup>
+          <form class="signup__form" action="https://formspree.io/f/mgaewygp" method="POST" novalidate>
+            <label class="visually-hidden" for="email-final">Adresa ta de email</label>
+            <input class="signup__input" type="email" id="email-final" name="email" placeholder="adresa@email.com" autocomplete="email" required>
+            <button class="btn btn--primary" type="submit">Anunță-mă la lansare</button>
+          </form>
+          <p class="signup__note">Lansăm în 2027. Zero spam, un singur email când e gata.</p>
+          <p class="signup__msg" role="status" aria-live="polite" hidden></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       8. FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+
+      <a class="logo logo--sm" href="#" aria-label="Chirivo — sus">
+        <svg class="logo__mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 12L12 4L20 12V20H4V12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M9 14.5L11.5 17L16 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="logo__word">Chirivo</span>
+      </a>
+
+      <nav class="site-footer__social" aria-label="Rețele sociale">
+ 
+  <a href="https://www.instagram.com/chirivo.ro/" rel="noopener">Instagram <span class="handle">@chirivo.ro</span></a>
+ 
+  <a href="https://www.tiktok.com/@chirivo.ro?lang=ro-RO" rel="noopener">TikTok <span class="handle">@chirivo.ro</span></a>
+  
+  <a href="https://www.facebook.com/profile.php?id=61593567008754" rel="noopener">Facebook <span class="handle">Chirivo</span></a>
+</nav>
+
+      <p class="site-footer__contact">
+        <a href="mailto:ChirivoRo@gmail.com">ChirivoRo@gmail.com</a>
+      </p>
+
+      <p class="site-footer__fine">Un proiect construit de la zero, în România. 2026-2027.</p>
+
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon Chirivo: iconița brandului, albă, pe pătrat albastru.
+       Monocrom: o singură culoare pe iconiță. -->
+  <style>
+    .bg { fill: #3B6FCC; fill: oklch(58% 0.14 240); }
+  </style>
+  <rect class="bg" width="24" height="24" rx="5"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M4 12L12 4L20 12V20H4V12Z"/>
+    <path d="M9 14.5L11.5 17L16 12"/>
+  </g>
+</svg>
